@@ -17,7 +17,9 @@ label {
   font-family: 'Source Code Pro';
 }
 
-.fa-cog {
+.fa-cog,
+.fa-file-import,
+.fa-download {
   color: white;
   cursor: pointer;
 }

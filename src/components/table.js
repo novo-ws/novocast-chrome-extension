@@ -19,8 +19,7 @@ export default class TableClass extends React.Component {
   };
   getLink() {}
   cast(url) {
-    chrome.runtime.sendMessage({ type: 'open', url: url });
-    console.log(url);
+    chrome.runtime.sendMessage({ type: 'open', url: url, ip: this.props.ip });
   }
   download() {}
   render() {

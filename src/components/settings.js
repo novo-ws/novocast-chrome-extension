@@ -8,11 +8,8 @@ export const SettingsCog = props => {
   return <i className="fa fa-cog" onClick={show} />;
 };
 export class Settings extends Component {
-  state = {
-    ip: undefined
-  };
   save(evt) {
-    this.setState({ ip: evt.target.value });
+    this.props.setIP(evt.target.value);
   }
   render() {
     return (
@@ -20,13 +17,13 @@ export class Settings extends Component {
         {this.props.show && (
           <Form>
             <FormGroup>
-              <Label for="ip">IP</Label>
+              <Label for="ip">IP Address</Label>
               <Input
                 type="text"
                 name="ip"
                 id="ip"
-                placeholder="Roku IP Address"
-                value={this.state.ip}
+                placeholder="Your Roku IP Address"
+                value={this.props.ip}
                 onChange={this.save.bind(this)}
               />
             </FormGroup>
