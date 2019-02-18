@@ -40,6 +40,7 @@ export default class TableClass extends React.Component {
   getLink() {}
   // Cast videos to Roku
   cast({ url, title, image }) {
+    this.props.showCasting();
     chrome.runtime.sendMessage(
       {
         type: 'cast',
@@ -48,7 +49,10 @@ export default class TableClass extends React.Component {
         title: title,
         image: image
       },
-      () => {}
+      () => {
+        this.props.showCasting();
+        // Change the icon to casting
+      }
     );
   }
   // Download video to computer
