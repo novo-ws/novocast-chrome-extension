@@ -5,7 +5,9 @@ chrome.runtime.onMessage.addListener(msg => {
       msg.ip
     }:8060/launch/dev?version=1&url=${encodeURIComponent(
       msg.url
-    )}&title=${encodeURIComponent('video')}&image=${encodeURIComponent('url')}`;
+    )}&title=${encodeURIComponent(msg.title)}&image=${encodeURIComponent(
+      msg.image
+    )}`;
     fetch(url, {
       method: 'POST'
     })
