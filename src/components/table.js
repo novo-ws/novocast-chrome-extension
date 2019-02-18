@@ -1,6 +1,6 @@
 /*global chrome*/
 import React from 'react';
-import { Table } from 'reactstrap';
+import { Table, UncontrolledTooltip } from 'reactstrap';
 
 export default class TableClass extends React.Component {
   state = {
@@ -27,19 +27,29 @@ export default class TableClass extends React.Component {
           'https://www.bing.com/th?id=AMMS_fdd5c63833a2f2e6ca576f9912700098&w=110&h=110&c=7&rs=1&qlt=80&pcl=f9f9f9&cdv=1&pid=16.1',
         title: 'Avejon de conon',
         url: 'http://clips.vorwaerts-gmbh.de/VfE_html5.mp4'
+      },
+      {
+        id: '4',
+        image: '',
+        title: 'awesome video',
+        url:
+          'https://d2qguwbxlx1sbt.cloudfront.net/TextInMotion-VideoSample-1080p.mp4'
       }
     ]
   };
   getLink() {}
   // Cast videos to Roku
   cast({ url, title, image }) {
-    chrome.runtime.sendMessage({
-      type: 'cast',
-      url: url,
-      ip: this.props.ip,
-      title: title,
-      image: image
-    });
+    chrome.runtime.sendMessage(
+      {
+        type: 'cast',
+        url: url,
+        ip: this.props.ip,
+        title: title,
+        image: image
+      },
+      () => {}
+    );
   }
   // Download video to computer
   download({ url, title, image }) {
@@ -58,9 +68,13 @@ export default class TableClass extends React.Component {
           <th scope="row">{item.id}</th>
           <td>
             <i
+              id={'item' + item.id}
               className="fas fa-download"
               onClick={() => this.download(item)}
             />
+            <UncontrolledTooltip placement="left" target={'item' + item.id}>
+              {`Download: ${item.title}`}
+            </UncontrolledTooltip>
           </td>
           <td>
             <i className="fas fa-file-import" onClick={() => this.cast(item)} />
@@ -69,7 +83,7 @@ export default class TableClass extends React.Component {
       );
     });
     return (
-      <Table dark>
+      <Table>
         <thead>
           <tr>
             <th>#</th>

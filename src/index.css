@@ -2,7 +2,7 @@
 @import url('https://use.fontawesome.com/releases/v5.7.2/css/all.css');
 body {
   width: 300px;
-  height: auto;
+  max-height: 600px;
   background: #212121;
 }
 
@@ -17,6 +17,13 @@ label {
   font-family: 'Source Code Pro';
 }
 
+.table {
+  color: white;
+}
+.table td,
+.table th {
+  border: none !important;
+}
 .fa-cog,
 .fa-file-import,
 .fa-download {

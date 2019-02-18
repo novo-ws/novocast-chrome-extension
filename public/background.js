@@ -1,4 +1,4 @@
-chrome.runtime.onMessage.addListener(msg => {
+chrome.runtime.onMessage.addListener((msg, sender, response) => {
   switch (msg.type) {
     case 'cast':
       // Casting to Roku
@@ -12,10 +12,11 @@ chrome.runtime.onMessage.addListener(msg => {
       fetch(url, {
         method: 'POST'
       })
-        .then(res => {
-          alert(`"${msg.title}" is now playing on ${msg.ip}`);
+        .then(() => {
+          response();
         })
         .catch(e => alert(e.toString()));
+      return true;
       break;
     // Handles file downloads
     case 'download':
