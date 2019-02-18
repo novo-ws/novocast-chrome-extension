@@ -36,6 +36,7 @@ class App extends Component {
           <TableClass
             ip={this.state.ip}
             showCasting={this.showCasting.bind(this)}
+            casting={this.state.showCasting}
           />
         </Container>
       </div>

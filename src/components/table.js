@@ -1,12 +1,13 @@
 /*global chrome*/
 import React from 'react';
-import { Table, UncontrolledTooltip } from 'reactstrap';
+import { Table, UncontrolledTooltip, Spinner } from 'reactstrap';
 
 export default class TableClass extends React.Component {
   state = {
     table: [
       {
         id: '1',
+        casting: false,
         image:
           'https://www.bing.com/th?u=https%3a%2f%2fscontent-sea1-1.cdninstagram.com%2fvp%2f0e628beef9133524ff85b252fb144f10%2f5CC0BBB7%2ft51.2885-15%2fsh0.08%2fe35%2fc0.135.1080.1080%2fs640x640%2f50079442_1218857501600388_6153008597411267969_n.jpg%3f_nc_ht%3dscontent-sea1-1.cdninstagram.com&ehk=X2Ooodu0UoyhwdnXtvTkLQ&w=145&h=145&c=7&rs=1&qlt=80&rf=vl_fallback_instagram.png&pid=AlgoBlock',
         title: 'Puta nina bailando',
@@ -15,6 +16,7 @@ export default class TableClass extends React.Component {
       },
       {
         id: '2',
+        casting: false,
         image:
           'https://www.bing.com/th?u=https%3a%2f%2fscontent-sea1-1.cdninstagram.com%2fvp%2fb97a047ed392b27ecddf158262c3ea71%2f5CDF19ED%2ft51.2885-15%2fsh0.08%2fe35%2fc0.135.1080.1080%2fs640x640%2f49538211_378800539517644_2781103675312605684_n.jpg%3f_nc_ht%3dscontent-sea1-1.cdninstagram.com&ehk=ZefZzw7Tm2VRcI5qj6EujQ&w=145&h=145&c=7&rs=1&qlt=80&rf=vl_fallback_instagram.png&pid=AlgoBlock',
         title: 'Putisima nina linda bailando',
@@ -23,6 +25,7 @@ export default class TableClass extends React.Component {
       },
       {
         id: '3',
+        casting: false,
         image:
           'https://www.bing.com/th?id=AMMS_fdd5c63833a2f2e6ca576f9912700098&w=110&h=110&c=7&rs=1&qlt=80&pcl=f9f9f9&cdv=1&pid=16.1',
         title: 'Avejon de conon',
@@ -30,6 +33,7 @@ export default class TableClass extends React.Component {
       },
       {
         id: '4',
+        casting: false,
         image: '',
         title: 'awesome video',
         url:
@@ -39,7 +43,7 @@ export default class TableClass extends React.Component {
   };
   getLink() {}
   // Cast videos to Roku
-  cast({ url, title, image }) {
+  cast({ id, url, title, image }) {
     this.props.showCasting();
     chrome.runtime.sendMessage(
       {
@@ -52,6 +56,15 @@ export default class TableClass extends React.Component {
       () => {
         this.props.showCasting();
         // Change the icon to casting
+        // map and update
+        const newTable = this.state.table.map(item => {
+          item.casting = false;
+          if (item.id == id) {
+            item.casting = true;
+          }
+          return item;
+        });
+        this.setState({ table: newTable });
       }
     );
   }
@@ -81,7 +94,27 @@ export default class TableClass extends React.Component {
             </UncontrolledTooltip>
           </td>
           <td>
-            <i className="fas fa-file-import" onClick={() => this.cast(item)} />
+            {item.casting && (
+              <div>
+                <Spinner
+                  id={'spinner' + item.id}
+                  style={{ width: '1.2rem', height: '1.2rem', color: '#fff' }}
+                  type="grow"
+                />
+                <UncontrolledTooltip
+                  placement="left"
+                  target={'spinner' + item.id}
+                >
+                  Now Playing..
+                </UncontrolledTooltip>
+              </div>
+            )}
+            {!item.casting && (
+              <i
+                className="fas fa-file-import"
+                onClick={() => this.cast(item)}
+              />
+            )}
           </td>
         </tr>
       );
