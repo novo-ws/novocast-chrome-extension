@@ -31,25 +31,36 @@ export default class TableClass extends React.Component {
     ]
   };
   getLink() {}
+  // Cast videos to Roku
   cast({ url, title, image }) {
     chrome.runtime.sendMessage({
-      type: 'open',
+      type: 'cast',
       url: url,
       ip: this.props.ip,
       title: title,
       image: image
     });
   }
-  download() {}
+  // Download video to computer
+  download({ url, title, image }) {
+    chrome.runtime.sendMessage({
+      type: 'download',
+      url: url,
+      ip: this.props.ip,
+      title: title,
+      image: image
+    });
+  }
   render() {
     const TBODY = this.state.table.map(item => {
       return (
         <tr key={item.id}>
           <th scope="row">{item.id}</th>
           <td>
-            <a href={item.url}>
-              <i className="fas fa-download" />
-            </a>
+            <i
+              className="fas fa-download"
+              onClick={() => this.download(item)}
+            />
           </td>
           <td>
             <i className="fas fa-file-import" onClick={() => this.cast(item)} />
