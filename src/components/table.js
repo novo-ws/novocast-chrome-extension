@@ -1,6 +1,7 @@
 /*global chrome*/
 import React from 'react';
-import { Table, UncontrolledTooltip, Spinner, Container } from 'reactstrap';
+import { Table, UncontrolledTooltip, Spinner } from 'reactstrap';
+import Add from './add';
 
 export default class TableClass extends React.Component {
   state = {
@@ -72,8 +73,19 @@ export default class TableClass extends React.Component {
       image: image
     });
   }
-  add() {
-    // Adding urls to cast
+  add(e) {
+    // Add url to current table
+    if (e.key == 'Enter') {
+      this.state.table.push({
+        id: '0',
+        casting: false,
+        image: '',
+        title: '',
+        url: e.target.value
+      });
+      this.setState({ table: this.state.table });
+      e.preventDefault();
+    }
   }
   render() {
     const TBODY = this.state.table.map(item => {
@@ -117,6 +129,7 @@ export default class TableClass extends React.Component {
     });
     return (
       <div>
+        {this.props.add && <Add add={this.add.bind(this)} />}
         {this.state.table.length >= 1 && (
           <Table>
             <thead>

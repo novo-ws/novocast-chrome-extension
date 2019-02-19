@@ -6,6 +6,7 @@ import TableClass from './components/table';
 
 class App extends Component {
   state = {
+    showAdd: false,
     showCasting: false,
     showSettings: false,
     ip: localStorage.getItem('ip') || ''
@@ -20,6 +21,10 @@ class App extends Component {
     this.setState({ ip });
     localStorage.setItem('ip', ip);
   }
+  add() {
+    // Adding urls to cast
+    this.setState({ showAdd: !this.state.showAdd });
+  }
   render() {
     return (
       <div className="App">
@@ -29,6 +34,7 @@ class App extends Component {
               <Header
                 show={this.showSettings.bind(this)}
                 casting={this.state.showCasting}
+                add={this.add.bind(this)}
               />
               <Settings
                 show={this.state.showSettings}
@@ -43,6 +49,7 @@ class App extends Component {
                 ip={this.state.ip}
                 showCasting={this.showCasting.bind(this)}
                 casting={this.state.showCasting}
+                add={this.state.showAdd}
               />
             </Col>
           </Row>

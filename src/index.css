@@ -24,6 +24,7 @@ label {
 .table th {
   border: none !important;
 }
+.fa-plus,
 .fa-cog,
 .fa-file-import,
 .fa-download {
