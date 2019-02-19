@@ -77,7 +77,7 @@ export default class TableClass extends React.Component {
     // Add url to current table
     if (e.key == 'Enter') {
       this.state.table.push({
-        id: '0',
+        id: this.state.table.length + 1,
         casting: false,
         image: '',
         title: '',
