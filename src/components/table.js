@@ -1,47 +1,41 @@
 /*global chrome*/
 import React from 'react';
-import { Table, UncontrolledTooltip, Spinner } from 'reactstrap';
+import { Table, UncontrolledTooltip, Spinner, Container } from 'reactstrap';
 
 export default class TableClass extends React.Component {
   state = {
     table: [
       {
-        id: '1',
-        casting: false,
-        image:
-          'https://www.bing.com/th?u=https%3a%2f%2fscontent-sea1-1.cdninstagram.com%2fvp%2f0e628beef9133524ff85b252fb144f10%2f5CC0BBB7%2ft51.2885-15%2fsh0.08%2fe35%2fc0.135.1080.1080%2fs640x640%2f50079442_1218857501600388_6153008597411267969_n.jpg%3f_nc_ht%3dscontent-sea1-1.cdninstagram.com&ehk=X2Ooodu0UoyhwdnXtvTkLQ&w=145&h=145&c=7&rs=1&qlt=80&rf=vl_fallback_instagram.png&pid=AlgoBlock',
-        title: 'Puta nina bailando',
-        url:
-          'https://scontent-lga3-1.cdninstagram.com/vp/d67074c501cf721f1453fe61f86b363f/5C6B8033/t50.2886-16/52514223_809587446049287_3868763500645974016_n.mp4?_nc_ht=scontent-lga3-1.cdninstagram.com'
-      },
-      {
-        id: '2',
-        casting: false,
-        image:
-          'https://www.bing.com/th?u=https%3a%2f%2fscontent-sea1-1.cdninstagram.com%2fvp%2fb97a047ed392b27ecddf158262c3ea71%2f5CDF19ED%2ft51.2885-15%2fsh0.08%2fe35%2fc0.135.1080.1080%2fs640x640%2f49538211_378800539517644_2781103675312605684_n.jpg%3f_nc_ht%3dscontent-sea1-1.cdninstagram.com&ehk=ZefZzw7Tm2VRcI5qj6EujQ&w=145&h=145&c=7&rs=1&qlt=80&rf=vl_fallback_instagram.png&pid=AlgoBlock',
-        title: 'Putisima nina linda bailando',
-        url:
-          'https://scontent-lga3-1.cdninstagram.com/vp/dce9956620d248e4a2948941d857193b/5C6B804C/t50.2886-16/51863638_517170855439703_3602953498024476672_n.mp4?_nc_ht=scontent-lga3-1.cdninstagram.com'
-      },
-      {
-        id: '3',
-        casting: false,
-        image:
-          'https://www.bing.com/th?id=AMMS_fdd5c63833a2f2e6ca576f9912700098&w=110&h=110&c=7&rs=1&qlt=80&pcl=f9f9f9&cdv=1&pid=16.1',
-        title: 'Avejon de conon',
-        url: 'http://clips.vorwaerts-gmbh.de/VfE_html5.mp4'
-      },
-      {
-        id: '4',
+        id: '',
         casting: false,
         image: '',
-        title: 'awesome video',
-        url:
-          'https://d2qguwbxlx1sbt.cloudfront.net/TextInMotion-VideoSample-1080p.mp4'
+        title: '',
+        url: ''
       }
     ]
   };
-  getLink() {}
+  componentDidMount() {
+    let getUrls = () => {
+      var vids = document.getElementsByTagName('video');
+      // vids is an HTMLCollection
+      let urls = [];
+      for (var i = 0; i < vids.length; i++) {
+        urls.push(vids.item(i).currentSrc);
+      }
+      return urls;
+    };
+    chrome.tabs.executeScript(
+      {
+        code: '(' + getUrls + ')();'
+      },
+      results => {
+        let table = results[0].map((item, i) => {
+          return { id: i, casting: false, image: '', title: '', url: item };
+        });
+        this.setState({ table: table });
+      }
+    );
+  }
   // Cast videos to Roku
   cast({ id, url, title, image }) {
     this.props.showCasting();
@@ -78,11 +72,13 @@ export default class TableClass extends React.Component {
       image: image
     });
   }
+  add() {
+    // Adding urls to cast
+  }
   render() {
     const TBODY = this.state.table.map(item => {
       return (
         <tr key={item.id}>
-          <th scope="row">{item.id}</th>
           <td>
             <i
               id={'item' + item.id}
@@ -90,7 +86,7 @@ export default class TableClass extends React.Component {
               onClick={() => this.download(item)}
             />
             <UncontrolledTooltip placement="left" target={'item' + item.id}>
-              {`Download: ${item.title}`}
+              {`Download: ${item.url}`}
             </UncontrolledTooltip>
           </td>
           <td>
@@ -120,16 +116,22 @@ export default class TableClass extends React.Component {
       );
     });
     return (
-      <Table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Download</th>
-            <th>Cast</th>
-          </tr>
-        </thead>
-        <tbody>{TBODY}</tbody>
-      </Table>
+      <div>
+        {this.state.table.length >= 1 && (
+          <Table>
+            <thead>
+              <tr>
+                <th>Download</th>
+                <th>Cast</th>
+              </tr>
+            </thead>
+            <tbody>{TBODY}</tbody>
+          </Table>
+        )}
+        {this.state.table.length <= 0 && (
+          <p style={{ color: '#fff' }}>No video detected.</p>
+        )}
+      </div>
     );
   }
 }

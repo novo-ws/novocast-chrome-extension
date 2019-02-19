@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
 import { Settings } from './components/settings';
-import { Container } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import TableClass from './components/table';
 
 class App extends Component {
@@ -24,20 +24,28 @@ class App extends Component {
     return (
       <div className="App">
         <Container>
-          <Header
-            show={this.showSettings.bind(this)}
-            casting={this.state.showCasting}
-          />
-          <Settings
-            show={this.state.showSettings}
-            setIP={this.setIP.bind(this)}
-            ip={this.state.ip}
-          />
-          <TableClass
-            ip={this.state.ip}
-            showCasting={this.showCasting.bind(this)}
-            casting={this.state.showCasting}
-          />
+          <Row>
+            <Col>
+              <Header
+                show={this.showSettings.bind(this)}
+                casting={this.state.showCasting}
+              />
+              <Settings
+                show={this.state.showSettings}
+                setIP={this.setIP.bind(this)}
+                ip={this.state.ip}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <TableClass
+                ip={this.state.ip}
+                showCasting={this.showCasting.bind(this)}
+                casting={this.state.showCasting}
+              />
+            </Col>
+          </Row>
         </Container>
       </div>
     );
