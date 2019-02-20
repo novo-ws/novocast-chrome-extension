@@ -4,11 +4,7 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
       // Casting to Roku
       const url = `http://${
         msg.ip
-      }:8060/launch/dev?version=1&url=${encodeURIComponent(
-        msg.url
-      )}&title=${encodeURIComponent(msg.title)}&image=${encodeURIComponent(
-        msg.image
-      )}`;
+      }:8060/launch/dev?version=1&url=${encodeURIComponent(msg.url)}`;
       fetch(url, {
         method: 'POST'
       })
@@ -17,7 +13,6 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
         })
         .catch(e => alert(e.toString()));
       return true;
-      break;
     // Handles file downloads
     case 'download':
       chrome.downloads.download({ url: msg.url, saveAs: true });
