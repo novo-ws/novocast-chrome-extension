@@ -5,12 +5,11 @@ import Add from './add';
 
 export default class TableClass extends React.Component {
   state = {
+    title: '',
     table: [
       {
         id: '',
         casting: false,
-        image: '',
-        title: '',
         url: ''
       }
     ]
@@ -18,35 +17,39 @@ export default class TableClass extends React.Component {
   componentDidMount() {
     let getUrls = () => {
       var vids = document.querySelectorAll('video, source');
-
+      var pageTitle = document.title;
       let urls = [];
       for (var i = 0; i < vids.length; i++) {
-        urls.push(vids.item(i).src);
+        if (vids.item(i).src !== '') {
+          urls.push({ url: vids.item(i).src });
+        }
       }
-      return urls;
+      return { urls: urls, title: pageTitle };
     };
     chrome.tabs.executeScript(
       {
         code: '(' + getUrls + ')();'
       },
       results => {
-        let table = results[0].map((item, i) => {
-          return { id: i, casting: false, image: '', title: '', url: item };
+        let table = results[0].urls.map((item, i) => {
+          return { id: i, casting: false, url: item.url };
         });
-        this.setState({ table: table });
+
+        this.setState({
+          title: results[0].title,
+          table: table
+        });
       }
     );
   }
   // Cast videos to Roku
-  cast({ id, url, title, image }) {
+  cast({ id, url }) {
     this.props.showCasting();
     chrome.runtime.sendMessage(
       {
         type: 'cast',
         url: url,
-        ip: this.props.ip,
-        title: title,
-        image: image
+        ip: this.props.ip
       },
       () => {
         this.props.showCasting();
@@ -64,13 +67,11 @@ export default class TableClass extends React.Component {
     );
   }
   // Download video to computer
-  download({ url, title, image }) {
+  download({ url }) {
     chrome.runtime.sendMessage({
       type: 'download',
       url: url,
-      ip: this.props.ip,
-      title: title,
-      image: image
+      ip: this.props.ip
     });
   }
   add(e) {
@@ -79,8 +80,6 @@ export default class TableClass extends React.Component {
       this.state.table.push({
         id: this.state.table.length + 1,
         casting: false,
-        image: '',
-        title: '',
         url: e.target.value
       });
       this.setState({ table: this.state.table });
@@ -130,6 +129,9 @@ export default class TableClass extends React.Component {
     return (
       <div>
         {this.props.add && <Add add={this.add.bind(this)} />}
+        <h6 style={{ color: '#fff', textAlign: 'center' }}>
+          {this.state.title}
+        </h6>
         {this.state.table.length >= 1 && (
           <Table>
             <thead>
