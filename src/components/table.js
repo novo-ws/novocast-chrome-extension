@@ -17,11 +17,11 @@ export default class TableClass extends React.Component {
   };
   componentDidMount() {
     let getUrls = () => {
-      var vids = document.getElementsByTagName('video');
-      // vids is an HTMLCollection
+      var vids = document.querySelectorAll('video, source');
+
       let urls = [];
       for (var i = 0; i < vids.length; i++) {
-        urls.push(vids.item(i).currentSrc);
+        urls.push(vids.item(i).src);
       }
       return urls;
     };
