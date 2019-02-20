@@ -5,7 +5,7 @@ const Add = props => {
   return (
     <Form>
       <FormGroup>
-        <Label for="url">Add Video URL</Label>
+        <Label for="url">Add Video/Live Streaming URL</Label>
         <Input
           type="text"
           name="url"
