@@ -49,7 +49,8 @@ export default class TableClass extends React.Component {
       {
         type: 'cast',
         url: url,
-        ip: this.props.ip
+        ip: this.props.ip,
+        title: this.state.title
       },
       () => {
         this.props.showCasting();
@@ -57,7 +58,7 @@ export default class TableClass extends React.Component {
         // map and update
         const newTable = this.state.table.map(item => {
           item.casting = false;
-          if (item.id == id) {
+          if (item.id === id) {
             item.casting = true;
           }
           return item;
@@ -76,7 +77,7 @@ export default class TableClass extends React.Component {
   }
   add(e) {
     // Add url to current table
-    if (e.key == 'Enter') {
+    if (e.key === 'Enter') {
       this.state.table.push({
         id: this.state.table.length + 1,
         casting: false,

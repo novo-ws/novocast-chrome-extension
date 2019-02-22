@@ -4,7 +4,9 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
       // Casting to Roku
       const url = `http://${
         msg.ip
-      }:8060/launch/dev?version=1&url=${encodeURIComponent(msg.url)}`;
+      }:8060/launch/dev?version=1&url=${encodeURIComponent(msg.url)}&title=${
+        msg.title
+      }`;
       fetch(url, {
         method: 'POST'
       })
