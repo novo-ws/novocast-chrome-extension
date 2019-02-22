@@ -19,6 +19,7 @@ export default class TableClass extends React.Component {
       var vids = document.querySelectorAll('video, source');
       var pageTitle = document.title;
       let urls = [];
+
       for (var i = 0; i < vids.length; i++) {
         if (vids.item(i).src !== '') {
           urls.push({ url: vids.item(i).src });
@@ -31,8 +32,11 @@ export default class TableClass extends React.Component {
         code: '(' + getUrls + ')();'
       },
       results => {
-        let table = results[0].urls.map((item, i) => {
-          return { id: i, casting: false, url: item.url };
+        let table = [];
+        results[0].urls.forEach((item, i) => {
+          if (this.checkURL(item.url)) {
+            table.push({ id: i, casting: false, url: item.url });
+          }
         });
 
         this.setState({
@@ -41,6 +45,13 @@ export default class TableClass extends React.Component {
         });
       }
     );
+  }
+  checkURL(url) {
+    // Remove blob: from url
+    if (url.split('blob:').length >= 2) {
+      return false;
+    }
+    return true;
   }
   // Cast videos to Roku
   cast({ id, url }) {
