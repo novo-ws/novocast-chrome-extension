@@ -63,8 +63,9 @@ export default class TableClass extends React.Component {
         ip: this.props.ip,
         title: this.state.title
       },
-      () => {
+      error => {
         this.props.showCasting();
+        if (!error) return;
         // Change the icon to casting
         // map and update
         const newTable = this.state.table.map(item => {
