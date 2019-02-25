@@ -3,10 +3,11 @@ let contextMenuPoster = {
   title: 'Cast to Roku',
   contexts: ['image'],
   targetUrlPatterns: [
-    '*://*/*.png',
-    '*://*/*.jpg',
-    '*://*/*.jpeg',
-    '*://*/*.gif'
+    '*://*/*.png*',
+    '*://*/*.jpg*',
+    '*://*/*.jpeg*',
+    '*://*/*.gif*',
+    '*://*/*'
   ]
 };
 
