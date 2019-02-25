@@ -6,12 +6,12 @@
   "version": "1.0",
   "content_security_policy": "script-src 'self' 'sha256-5As4+3YpY62+l38PsxCEkjB1R4YtyktBtRScTJ3fyLU=' http://localhost:9008 https://www.google-analytics.com; object-src 'self'",
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js", "contextMenu.js"]
   },
 
   "browser_action": {
     "default_popup": "index.html",
     "default_title": "NovoCast"
   },
-  "permissions": ["<all_urls>", "downloads", "activeTab"]
+  "permissions": ["<all_urls>", "downloads", "activeTab", "contextMenus"]
 }
