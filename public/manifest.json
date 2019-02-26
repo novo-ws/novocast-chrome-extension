@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "NovoCast",
-  "description": "Stream any html5 video to roku",
-  "version": "1.0",
+  "description": "Cast HTML5 videos and images to Roku.",
+  "version": "1.2",
   "content_security_policy": "script-src 'self' 'sha256-5As4+3YpY62+l38PsxCEkjB1R4YtyktBtRScTJ3fyLU=' http://localhost:9008 https://www.google-analytics.com; object-src 'self'",
   "background": {
     "scripts": ["background.js", "contextMenu.js"]

@@ -1,3 +1,5 @@
+/* ---------------------- COPY RIGHT 2019: NOVO WORK SYSTEMS --------------------- */
+/* -------------------------- Use @ your own risk. -------------------------- */
 import React, { Component } from 'react';
 import Header from './components/Header';
 import { Settings } from './components/settings';

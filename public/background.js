@@ -1,3 +1,5 @@
+/* ---------------------- COPY RIGHT 2019: NOVO WORK SYSTEMS --------------------- */
+/* -------------------------- Use @ your own risk. -------------------------- */
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   if (msg.ip === '') {
     alert("You must set your Roku's IP Address.");
@@ -21,7 +23,7 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
         .catch(e => {
           response(false);
           if (e.toString() === 'TypeError: Failed to fetch') {
-            alert('Wrong IP Address .');
+            alert('Wrong IP Address.');
           } else {
             alert(e.toString());
           }

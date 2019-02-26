@@ -1,3 +1,5 @@
+/* ---------------------- COPY RIGHT 2019: NOVO WORK SYSTEMS --------------------- */
+/* -------------------------- Use @ your own risk. -------------------------- */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';

@@ -1,3 +1,5 @@
+/* ---------------------- COPY RIGHT 2019: NOVO WORK SYSTEMS --------------------- */
+/* -------------------------- Use @ your own risk. -------------------------- */
 let contextMenuPoster = {
   id: 'NovoCast',
   title: 'Cast to Roku',
@@ -13,8 +15,7 @@ let contextMenuPoster = {
 
 chrome.contextMenus.create(contextMenuPoster);
 chrome.contextMenus.onClicked.addListener(obj => {
-  // TODO:
-  // Make a call to the API and send srcUrl and pageUrl
+  // NOTE This will probably be extracted out into a reusable function.
   const url = `http://${localStorage.getItem(
     'ip'
   )}:8060/launch/dev?poster=${encodeURIComponent(obj.srcUrl)}`;
@@ -25,6 +26,10 @@ chrome.contextMenus.onClicked.addListener(obj => {
       console.log(re);
     })
     .catch(e => {
-      console.log(e);
+      if (e.toString() === 'TypeError: Failed to fetch') {
+        alert('Wrong IP Address.');
+      } else {
+        alert(e.toString());
+      }
     });
 });
