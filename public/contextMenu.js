@@ -1,4 +1,4 @@
-/* ---------------------- COPY RIGHT 2019: NOVO WORK SYSTEMS --------------------- */
+/*  -------------------- © 2019. NOVO WORK SYSTEMS | http://novo.ws ------------------- */
 /* -------------------------- Use @ your own risk. -------------------------- */
 let contextMenuPoster = {
   id: 'NovoCast',

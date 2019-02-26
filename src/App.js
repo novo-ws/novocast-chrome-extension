@@ -5,6 +5,7 @@ import Header from './components/Header';
 import { Settings } from './components/settings';
 import { Container, Row, Col } from 'reactstrap';
 import TableClass from './components/table';
+import By from './components/By';
 
 class App extends Component {
   state = {
@@ -53,6 +54,11 @@ class App extends Component {
                 casting={this.state.showCasting}
                 add={this.state.showAdd}
               />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <By />
             </Col>
           </Row>
         </Container>
