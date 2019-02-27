@@ -4,7 +4,16 @@ const contextMenuVideo = {
   id: 'video',
   title: 'Cast to Roku',
   contexts: ['video'],
-  targetUrlPatterns: ['*://*/*.mp4*', '*://*/*.webm*']
+  targetUrlPatterns: [
+    '*://*/*.mp4*',
+    '*://*/*.m3u8*',
+    '*://*/*.3gp*',
+    '*://*/*.mov*',
+    '*://*/*.mkv*',
+    '*://*/*.ism*',
+    '*://*/*.mpd*',
+    '*://*/*'
+  ]
 };
 const contextMenuPoster = {
   id: 'image',
@@ -19,62 +28,52 @@ const contextMenuPoster = {
   ]
 };
 
+const sendRequest = url => {
+  fetch(url, {
+    method: 'POST'
+  })
+    .then(re => {
+      console.log(re);
+    })
+    .catch(e => {
+      if (e.toString() === 'TypeError: Failed to fetch') {
+        alert('Wrong IP Address.');
+      } else {
+        alert(e.toString());
+      }
+    });
+};
+
 chrome.contextMenus.create(contextMenuPoster);
 chrome.contextMenus.create(contextMenuVideo);
 chrome.contextMenus.onClicked.addListener((obj, tab) => {
-  // NOTE This will probably be extracted out into a reusable function.
   let srcURL = '';
   let mediaType = '';
   let title = '';
   let subtitle = '';
   const url = `http://${localStorage.getItem('ip')}:8060/launch/dev?`;
+
   switch (obj.mediaType) {
     case 'video':
       mediaType = 'url';
       srcURL = obj.srcUrl;
       title = tab.title;
       subtitle = 'iyy2u323yu2yu32y3uy2u3';
-      console.log(tab);
-      // Make the request via fetch
-      fetch(
+
+      sendRequest(
         url +
           `${mediaType}=${encodeURIComponent(
             srcURL
           )}&title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(
             subtitle
-          )}`,
-        {
-          method: 'POST'
-        }
-      )
-        .then(re => {
-          console.log(re);
-        })
-        .catch(e => {
-          if (e.toString() === 'TypeError: Failed to fetch') {
-            alert('Wrong IP Address.');
-          } else {
-            alert(e.toString());
-          }
-        });
+          )}`
+      );
       break;
     case 'image':
       mediaType = 'poster';
       srcURL = obj.srcUrl;
-      // Make the request via fetch
-      fetch(url + `${mediaType}=${encodeURIComponent(srcURL)}`, {
-        method: 'POST'
-      })
-        .then(re => {
-          console.log(re);
-        })
-        .catch(e => {
-          if (e.toString() === 'TypeError: Failed to fetch') {
-            alert('Wrong IP Address.');
-          } else {
-            alert(e.toString());
-          }
-        });
+
+      sendRequest(url + `${mediaType}=${encodeURIComponent(srcURL)}`);
       break;
 
     default:
