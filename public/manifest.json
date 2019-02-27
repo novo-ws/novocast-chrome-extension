@@ -3,15 +3,16 @@
 
   "name": "NovoCast",
   "description": "Cast HTML5 videos and images to Roku.",
-  "version": "1.2",
+  "version": "1",
   "content_security_policy": "script-src 'self' 'sha256-5As4+3YpY62+l38PsxCEkjB1R4YtyktBtRScTJ3fyLU=' http://localhost:9008 https://www.google-analytics.com; object-src 'self'",
   "background": {
     "scripts": ["background.js", "contextMenu.js"]
   },
-
+  "icons": { "16": "16.png", "48": "48.png", "128": "128.png" },
   "browser_action": {
     "default_popup": "index.html",
-    "default_title": "NovoCast"
+    "default_title": "NovoCast",
+    "default_icon": { "48": "48.png" }
   },
   "permissions": ["<all_urls>", "downloads", "activeTab", "contextMenus"]
 }
