@@ -1,6 +1,6 @@
 {
-  "name": "novostream",
-  "version": "0.1.0",
+  "name": "novocast-chrome",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
